@@ -160,16 +160,41 @@ def recommend_task(tasks):
         )
     today = date.today()
     def score(task):
-    priority_score = {
-      "high": 30,
       "medium": 20,
-      "low":10,
+        priority_score = {
+            "High": 30,
+            "Medium": 20,
+             "Low":10,
         
-    } .get(task["priority"],10)
-    try:
-        day_left = (
-            date.fromisoformat(task["due_date"]) - today
+        } .get(task["priority"],10)
+        try:
+            days_left = (
+                date.fromisoformat(task["due_date"]) - today
             
         ).days
-    except ValueError:
-        day_left = 7               
+        except ValueError:
+            day_left = 7 
+         
+        if days_left < 0:
+            deadline_score = 40
+        elif days_left == 0:
+            deadline_score = 35
+        elif days_left == 1: 
+            deadline_score =  25
+        elif days_left <= 3:
+            deadline_score = 15
+        else:
+            deadline_score = 5
+            
+        duration_score = max(0, 10 - task["minutes"] // 15)
+            
+        return priority_score + deadline_score + duration_score
+        
+    selected = max(pending,key=score)
+    return  (
+            f"Study {selected['subject']}",
+            f"Start: {selected['topic']}"
+            f"({selected['minutes']} min, {selected['priority']} priority)."
+        )
+            
+             
