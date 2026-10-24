@@ -151,11 +151,25 @@ def get_today_session_count():
  # smart study assistant
  
 def recommend_task(tasks):
-    pending = [task for task in tasks if not task["comleted"]]
+    pending = [task for task in tasks if not task["completed"]]
     if not pending:
         return (
-            "all caught up!",
-            "add a new task or review something  you have studied."
+            "All caught up!",
+            "Add a new task or review something  you have studied."
            
         )
-    today = date.today()                
+    today = date.today()
+    def score(task):
+    priority_score = {
+      "high": 30,
+      "medium": 20,
+      "low":10,
+        
+    } .get(task["priority"],10)
+    try:
+        day_left = (
+            date.fromisoformat(task["due_date"]) - today
+            
+        ).days
+    except ValueError:
+        day_left = 7               
