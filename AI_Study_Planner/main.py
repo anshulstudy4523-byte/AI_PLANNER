@@ -220,26 +220,48 @@ class StudyPlannerAPP:
           
 #  visual_style
 
-    def configure_style(self):
+    def configure_styles(self):
         style = ttk.Style()
         style.theme_use("clam")
         
         style.configure(
-            "Treevieaw"
-            background=PANEL
-            foreground=TEXT
-            )
-           
+            "Treeview",
+            background=PANEL,
+            foreground=TEXT,
+            fieldbackground=PANEL,
+            rowheight=34,
+            borderwidth=0,
+            font=("Segoe UI", 10, )
+        )
         style.configure(
-            "TCombobox"
-            fieldbackground=PANEL_LIGHT
-            background=GREEN 
+            "Treeview.Headling",
+            background=PANEL_LIGHT,
+            foreground=TEXT,
+            relief="flat",
+            font=("Segoe UI", 10, "bold")
+        )
+        style.map(
+            "Treeview",
+            background=[("selected",ACCENT)],
+            foreground=[("selected","white")]
+        )   
+        style.configure(
+            "TCombobox",
+            fieldbackground=PANEL_LIGHT,
+            background=PANEL_LIGHT,
+            foreground=TEXT,
+            arrowcolor=TEXT
+        )
+        style.configure(
+            "TProgressbar",
+            troughcolor=PANEL_LIGHT,
+            background=GREEN,
             thickness=12 
         )    
         
     def make_button(self, parent, text, command,
-                     color=ACENT,  fg="White"):
-         return tk.Button(
+                     color=ACCENT,  fg="White"):
+        return tk.Button(
              parent,
              text=text,
              command=command,
@@ -254,9 +276,9 @@ class StudyPlannerAPP:
              cursor="hand2",
              font=("Sege UI", 10, "bold")
          )   
-     def made_label(self, parent, text, size=11,
-                    color=TEXT, bold=False):
-   return tk.Label(
+    def make_label(self, parent, text, size=11,
+                    color=TEXT, bold=False):   
+        return tk.Label(
              parent,
              text=text, 
              bg=parent.cget("bg"),
@@ -269,7 +291,15 @@ class StudyPlannerAPP:
              anchor="w"
              
          )    
-     def     
+    def made_card(self, parent, padding=16):
+        returrn ttk.Frame(
+            parent,
+            bg=PANEL,
+            padx=padding,
+            pady=padding,
+            hightlightthickness=1,
+            highttlightbackground="#2B33455"
+        )
         
         
         
