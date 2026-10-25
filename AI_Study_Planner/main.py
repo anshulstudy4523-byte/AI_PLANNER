@@ -291,15 +291,59 @@ class StudyPlannerAPP:
              anchor="w"
              
          )    
-    def made_card(self, parent, padding=16):
-        returrn ttk.Frame(
+    def make_card(self, parent, padding=16):
+        return tk.Frame(
             parent,
             bg=PANEL,
             padx=padding,
             pady=padding,
-            hightlightthickness=1,
-            highttlightbackground="#2B33455"
+            highlightthickness=1,
+            highlightbackground="#2B3345"
         )
+        # page layout
+        
+    def build_layout(self):
+        self.sidebar = tk.Frame(self.root, bg="#151925", width=210)
+        self.sidebar.pack(side="left", fill="y")
+        self.side.pack_propagate(False)
+        
+        self.make_label(
+            self.sidebar,"+ STUDY FLOW", 18, ACCENT, True
+            ).pack(anchoor="w", padx=20, pady=(28, 4))
+        self.make_label(
+            self.sidebar, " YOUR PERSONAL STUDY SPACE", 8, MUTED
+        ).pack(anchor="w", pady=20, pady=(0, 30))
+        self.make_label(
+            self.sidebar,"OVERVIEW", 9, MUTED, True
+        ).pack(anchor="w", padx=20, pady=(0, 8))
+        self.make_button(
+            self.sidebar,"Daily Goal ",
+            self.set_daily_goal, PANEL_LIGHT
+        ).pack(full="x", padx= 12, pady=4)
+        
+        tk.Frame(
+            self.sidebar, bg="#30374A", Height=1
+        ).pack(fill="x", padx=18, pady= 24)
+        
+        self.make_label(
+            self.sidebar,"stay consistent", 9, MUTED, True
+        ).pack(anchor="w", padx=20)
+        
+        self.make_label(
+            self.sidebars,
+            "Small prograss every day\ncreate big results.",
+            10, TEXT
+        ).pack(anchor="w",padx=20, pady=10)
+        
+        self.make_label(
+            self.sidebar, "PYTHON PROJECT  : V1.0", 8, MUTED
+        ).pack(side="botton", anchor="w", padx=20, pady=20)
+        
+        self.content = ttk.Frame(self.root, bg=BG)
+        self.content.pack(side="left", full="both", expand=True)
+        
+        self.header = ttk.Frame(self.content, bg=BG)
+        self.header.pack(fill="x", padx=26, pady=(24, 12))    
         
         
         
