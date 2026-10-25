@@ -309,43 +309,112 @@ class StudyPlannerAPP:
         
         self.make_label(
             self.sidebar,"+ STUDY FLOW", 18, ACCENT, True
-            ).pack(anchoor="w", padx=20, pady=(28, 4))
+            ).pack(anchor="w", padx=20, pady=(28, 4))
         self.make_label(
             self.sidebar, " YOUR PERSONAL STUDY SPACE", 8, MUTED
-        ).pack(anchor="w", pady=20, pady=(0, 30))
+        ).pack(anchor="w", padx=20, pady=(0, 30))
         self.make_label(
             self.sidebar,"OVERVIEW", 9, MUTED, True
         ).pack(anchor="w", padx=20, pady=(0, 8))
+        
+        self.make_button(
+            self.sidebar, " Dashboard",
+            self.show_dashboard
+        ).pack(fill="x", padx=12, pady=4)
+        
+        self.make_button(
+            self.sidebar,"Study Tasks",
+            self.show_tasks, PANEL_LIGHT
+        ).pack(fill="x", padx=12 , pady=4)
+        
+        self.make_button(
+            self.sidebar, "Focus Timer",
+            self.show_timer, PANEL_LIGHT
+        ).pack(fill="x", padx=12 ,pady=4)
+        
         self.make_button(
             self.sidebar,"Daily Goal ",
             self.set_daily_goal, PANEL_LIGHT
         ).pack(full="x", padx= 12, pady=4)
         
         tk.Frame(
-            self.sidebar, bg="#30374A", Height=1
+            self.sidebar, bg="#30374A", height=1
         ).pack(fill="x", padx=18, pady= 24)
         
         self.make_label(
-            self.sidebar,"stay consistent", 9, MUTED, True
+            self.sidebar,"STAY CONSISTENT", 9, MUTED, True
         ).pack(anchor="w", padx=20)
         
         self.make_label(
-            self.sidebars,
-            "Small prograss every day\ncreate big results.",
+            self.sidebar,
+            "Small prograss every day\ncreates big results.",
             10, TEXT
         ).pack(anchor="w",padx=20, pady=10)
         
         self.make_label(
             self.sidebar, "PYTHON PROJECT  : V1.0", 8, MUTED
-        ).pack(side="botton", anchor="w", padx=20, pady=20)
+        ).pack(side="bottom", anchor="w", padx=20, pady=20)
         
-        self.content = ttk.Frame(self.root, bg=BG)
-        self.content.pack(side="left", full="both", expand=True)
+        self.content = tk.Frame(self.root, bg=BG)
+        self.content.pack(side="left", fill="both", expand=True)
         
-        self.header = ttk.Frame(self.content, bg=BG)
+        self.header = tk.Frame(self.content, bg=BG)
         self.header.pack(fill="x", padx=26, pady=(24, 12))    
         
+        self.page_title = self.make_label(
+            self.header, "Dashboard", 23, TEXT, True
+        )
+        self.page_title.pack(side="left")
         
+        self.date_label = self.make_label(
+            self.header, date.today().strftime("%A, %d %B %Y"),
+            10, MUTED
+        )
+        self.date_label.pack(side="right", pady=8)
+        
+        
+        self.page = tk.Frame(self.content, bg=BG)
+        self.page.pack(fill="both", expand=True, padx=26, pady=8)
+        
+    
+    def clear_page(self, title):
+        self.page_title.config(text=title)
+        for widget in self.page.winfo_children():
+            widget.destroy() 
+            
+            
+# dashboard   
+
+
+               
+     def show_dashboard(self):
+           self.clear_page("Dashboard")
+           self.refresh_dashboard()
+           
+           tasks = get_all_tasks()
+           today_minutes = get_today_minutes()
+           goal = int(get_setting("daily_goal", DEFAULT_GOAL_MINUTES))
+           completed = sum(task["completed"] for task in tasks)
+           pending = len(tasks) - completed
+           
+           stats = tk.Frame(self.page, bg=BG)
+           stats.pack(fill="x", pady=(0, 18))
+           
+           cards = [
+               ("TOTAL TASKS", str(len(tasks)), ACCENT),
+               ("COMPLETED", str(completed), GREEN),
+               ("PENDING", str(pending), YELLOW),
+               ("STUDY TODAY ", f"{today_minutes // 60}h"
+                f"{today_minutes % 60}m", ACCENT)
+           ] 
+           
+           for title, value, color in cards:
+               card = self.make_card(stats)
+               card.pack(side="left",fill="both", expand=True, padx=(0, 10))
+               self.make_label(card, title, 9, MUTED, True).pack(anchor="w")
+               self.make_label(card, value, 23, color, True).pack(
+                   anchor="w", pady=(8,0)
+               )
         
     
     
