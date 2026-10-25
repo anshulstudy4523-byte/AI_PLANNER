@@ -160,7 +160,6 @@ def recommend_task(tasks):
         )
     today = date.today()
     def score(task):
-      "medium": 20,
         priority_score = {
             "High": 30,
             "Medium": 20,
@@ -196,5 +195,33 @@ def recommend_task(tasks):
             f"Start: {selected['topic']}"
             f"({selected['minutes']} min, {selected['priority']} priority)."
         )
+class StudyPlannerAPP:
+
+    def __init__(self, root):
+        self.root = root
+        self.root.title(APP_NAME)
+        self.root.geometry("1150x760")
+        self.root.minsize(900, 620)
+        self.root.configure(bg=BG)
+        
+        self.timer_after_id = None
+        self.timer_running = False
+        self.timer_remaining = 25 * 60
+        self.timer_mode = "Focus"
+        self.selected_task_id = None
+        
+        self.configure_styles()
+        self.build_layout()
+        self.refresh_dashboard()
+        self.refresh_tasks()
+        self.refresh_recommendation()
+        self.update_timer_display()
+        
+        
+        
+        
+    
+    
+    
             
              
