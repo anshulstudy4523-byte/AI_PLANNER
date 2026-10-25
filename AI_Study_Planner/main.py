@@ -217,6 +217,59 @@ class StudyPlannerAPP:
         self.refresh_recommendation()
         self.update_timer_display()
         
+          
+#  visual_style
+
+    def configure_style(self):
+        style = ttk.Style()
+        style.theme_use("clam")
+        
+        style.configure(
+            "Treevieaw"
+            background=PANEL
+            foreground=TEXT
+            )
+           
+        style.configure(
+            "TCombobox"
+            fieldbackground=PANEL_LIGHT
+            background=GREEN 
+            thickness=12 
+        )    
+        
+    def make_button(self, parent, text, command,
+                     color=ACENT,  fg="White"):
+         return tk.Button(
+             parent,
+             text=text,
+             command=command,
+             bg=color,
+             fg=fg,
+             activebackground=color,
+             activeforeground=fg,
+             relief="flat",
+             bd=0,
+             padx=14,
+             pady=9,
+             cursor="hand2",
+             font=("Sege UI", 10, "bold")
+         )   
+     def made_label(self, parent, text, size=11,
+                    color=TEXT, bold=False):
+   return tk.Label(
+             parent,
+             text=text, 
+             bg=parent.cget("bg"),
+             fg=color,
+             fort=(
+                 "Segoe UI",
+                 size,
+                 "bold" if bold else "normal"
+             ),
+             anchor="w"
+             
+         )    
+     def     
         
         
         
